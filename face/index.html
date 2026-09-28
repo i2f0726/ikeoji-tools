@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>顔の形スキャン｜イケオジ計画</title>
+<meta name="description" content="スマホのカメラで顔の縦横の比率を測り、顔の形の目安と似合いやすい髪型の方向性を出します。画像はどこにも送信・保存しません。">
+<link rel="stylesheet" href="face.css">
+</head>
+<body>
+<header class="top">
+  <p class="brand">IKEOJI KEIKAKU</p>
+  <h1>顔の形スキャン</h1>
+  <p class="lead">顔の形の目安と、似合いやすい髪型がわかります</p>
+</header>
+
+<main>
+  <!-- 1. はじめ -->
+  <section id="s-intro" class="screen">
+    <div class="box">
+      <h2>できること</h2>
+      <ol class="steps">
+        <li>スマホのインカメラで、顔の<strong>縦の長さ・ほお・あご・ひたいの幅</strong>を測ります</li>
+        <li>丸顔・面長・ベース型・逆三角・卵型のうち、<strong>どれに近いか</strong>を出します</li>
+        <li>その顔の形に<strong>似合いやすい髪型</strong>と、美容院での伝え方を出します</li>
+      </ol>
+    </div>
+
+    <div class="box privacy">
+      <h2>顔の画像について</h2>
+      <p>顔の読み取りは、<strong>すべてこのスマホの中だけ</strong>で行います。画像や測った数値を、どこにも送信・保存しません。スキャンが終わると、カメラはすぐに止まります。</p>
+    </div>
+
+    <button id="btn-camera" class="btn primary">カメラでスキャンする</button>
+    <label class="btn secondary" for="file-input">写真を選んで調べる</label>
+    <input id="file-input" type="file" accept="image/*" hidden>
+    <p class="note center">写真は、正面から撮った真顔で、前髪を上げてひたいが見えるものを選んでください。</p>
+    <button id="btn-quiz" class="btn ghost">カメラを使わず、質問で調べる</button>
+    <p id="intro-msg" class="msg" hidden></p>
+  </section>
+
+  <!-- 2. スキャン中 -->
+  <section id="s-scan" class="screen" hidden>
+    <div class="stage">
+      <video id="video" playsinline muted></video>
+      <canvas id="overlay"></canvas>
+    </div>
+    <p id="scan-status" class="status">準備しています…</p>
+    <div class="progress"><div id="scan-bar"></div></div>
+    <div class="box tips-box">
+      <h2>うまく測るコツ</h2>
+      <ul class="tips">
+        <li>明るい場所で、スマホを<strong>目の高さ</strong>に、腕を伸ばして持つ</li>
+        <li>前髪を上げて、<strong>ひたいとフェイスライン</strong>を見せる</li>
+        <li>メガネは外し、真顔で正面を向く</li>
+      </ul>
+    </div>
+    <button id="btn-cancel" class="btn ghost">やめる</button>
+  </section>
+
+  <!-- 3. 質問 -->
+  <section id="s-quiz" class="screen" hidden>
+    <div class="box">
+      <h2>鏡を見ながら答えてください</h2>
+      <p class="note">前髪を上げて、正面から見たときの印象で選んでください。</p>
+      <div id="quiz"></div>
+      <button id="btn-quiz-done" class="btn primary" disabled>結果を見る</button>
+    </div>
+    <button class="btn ghost js-back">最初に戻る</button>
+  </section>
+
+  <!-- 4. 結果 -->
+  <section id="s-result" class="screen" hidden>
+    <div class="result-head">
+      <p class="small">あなたの顔の形は</p>
+      <p id="r-type" class="type"></p>
+      <p id="r-sub" class="sub"></p>
+    </div>
+
+    <div id="r-measure" class="box" hidden>
+      <h2>測った結果</h2>
+      <ul id="r-measure-list" class="measure"></ul>
+      <p class="note">平均的な顔（MediaPipeの標準の顔モデル）と比べた目安です。撮る角度や距離で少し変わります。</p>
+    </div>
+
+    <div class="box">
+      <h2 id="r-hair-title">似合いやすい髪型</h2>
+      <div id="r-hair"></div>
+    </div>
+
+    <div class="box">
+      <h2>ほかの顔の形も見る</h2>
+      <p class="note">判定に納得がいかないときや、2つの形の間だったときは、近いほうも読んでみてください。</p>
+      <div id="r-tabs" class="tabs"></div>
+    </div>
+
+    <div id="r-links" class="box" hidden>
+      <h2>あわせて読みたい</h2>
+      <ul id="r-links-list" class="links"></ul>
+    </div>
+
+    <div class="box caution">
+      <h2>この結果について</h2>
+      <p>顔の形で似合う髪型を決める考え方に、はっきりした科学的な根拠はありません。美容師さんが経験から使っている<strong>目安</strong>です。髪質やくせ、生え際、仕事の服装でも似合う髪型は変わるので、最後は美容師さんに相談してください。</p>
+      <p class="src">参考：<a href="https://37hair.space/face-magazine/" target="_blank" rel="noopener">37.0℃ tida「自分に似合う髪型は？」</a>／<a href="https://www.ozmall.co.jp/hairsalon/men/mens-marugao/" target="_blank" rel="noopener">OZmall「丸顔に似合う髪型」</a></p>
+    </div>
+
+    <button id="btn-copy" class="btn secondary">結果をコピーする</button>
+    <button class="btn ghost js-back">もう一度調べる</button>
+  </section>
+</main>
+
+<footer>
+  <p><a href="https://www.ikeojikeikaku.com/">イケオジ計画（ブログ）へ戻る</a></p>
+  <p><a href="https://www.ikeojikeikaku.com/entry/2026/09/24/115841">プライバシーポリシー</a></p>
+  <p class="small">顔の読み取りには、Googleの<a href="https://ai.google.dev/edge/mediapipe/solutions/vision/face_landmarker" target="_blank" rel="noopener">MediaPipe Face Landmarker</a>を使っています。</p>
+</footer>
+
+<script type="module" src="face.js"></script>
+</body>
+</html>
