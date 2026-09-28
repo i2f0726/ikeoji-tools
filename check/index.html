@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>清潔感セルフチェック（イケオジ指数診断）｜イケオジ計画</title>
+<meta name="description" content="40代・50代の男性向け、清潔感のセルフチェック30項目。当てはまる数から「イケオジ指数」を出し、見直したい項目に合わせた記事を紹介します。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy: #1a2744;
+    --navy-deep: #10192e;
+    --gold: #c9a227;
+    --gold-soft: #e8d9a0;
+    --cream: #f7f5ef;
+    --ink: #2a2a2a;
+    --sub: #6b6459;
+    --line: #e4ddc9;
+    --card: #ffffff;
+    --good: #4c7a5e;
+    --warn: #b8791f;
+    --bad: #a3402f;
+    --heading: var(--navy);
+    --ghost-text: var(--navy);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --navy: #223357;
+      --navy-deep: #0c1424;
+      --cream: #14120d;
+      --ink: #ece7da;
+      --sub: #b7ae9a;
+      --line: #3a3527;
+      --card: #1d1a13;
+      --good: #7fb08f;
+      --warn: #e0ab55;
+      --bad: #e58671;
+      --heading: var(--gold-soft);
+      --ghost-text: var(--ink);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --navy: #223357;
+    --navy-deep: #0c1424;
+    --cream: #14120d;
+    --ink: #ece7da;
+    --sub: #b7ae9a;
+    --line: #3a3527;
+    --card: #1d1a13;
+    --good: #7fb08f;
+    --warn: #e0ab55;
+    --bad: #e58671;
+    --heading: var(--gold-soft);
+    --ghost-text: var(--ink);
+    color-scheme: dark;
+  }
+
+  *{box-sizing:border-box;}
+  [hidden]{display:none !important;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Noto Sans JP', sans-serif;
+    font-size:14px;
+    padding-inline:16px;
+    padding-block:calc(28px + env(safe-area-inset-top, 0px)) calc(48px + env(safe-area-inset-bottom, 0px));
+    line-height:1.7;
+  }
+  .wrap{max-width:640px; margin:0 auto;}
+
+  header{margin-bottom:24px;}
+  .eyebrow{
+    font-size:12px;
+    letter-spacing:.14em;
+    color:var(--gold);
+    font-weight:700;
+    text-transform:uppercase;
+  }
+  h1{
+    font-family:'Shippori Mincho', serif;
+    font-weight:700;
+    font-size:clamp(26px,6vw,34px);
+    margin:6px 0 8px;
+    color:var(--heading);
+    text-wrap:balance;
+  }
+  .lede{color:var(--sub); font-size:14.5px; margin:0;}
+
+  .progress-card{
+    background:var(--navy);
+    color:#fff;
+    border-radius:14px;
+    padding:16px 18px;
+    margin:20px 0 28px;
+    display:flex;
+    align-items:center;
+    gap:16px;
+    box-shadow:0 6px 18px -8px rgba(26,39,68,.5);
+    position:sticky;
+    top:8px;
+    z-index:2;
+  }
+  .progress-num{
+    font-family:'Shippori Mincho', serif;
+    font-size:34px;
+    font-weight:700;
+    font-variant-numeric:tabular-nums;
+    line-height:1;
+    color:var(--gold-soft);
+  }
+  .progress-num span{font-size:16px; font-weight:500; color:#cfd7e6;}
+  .progress-body{flex:1; min-width:0;}
+  .progress-label{font-size:12px; letter-spacing:.08em; color:#b9c3da; margin-bottom:4px;}
+  .progress-verdict{font-weight:700; font-size:15px;}
+  .bar-track{margin-top:8px; height:6px; border-radius:99px; background:rgba(255,255,255,.16); overflow:hidden;}
+  .progress-sub{margin-top:8px; font-size:12px; color:#b9c3da;}
+  .bar-fill{height:100%; width:0%; background:var(--gold); border-radius:99px; transition:width .25s ease, background .25s ease;}
+
+  .cat{margin-bottom:26px;}
+  .cat-title{
+    font-family:'Shippori Mincho', serif;
+    font-size:16px;
+    font-weight:700;
+    color:var(--heading);
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+    margin-bottom:10px;
+    padding-bottom:6px;
+    border-bottom:1px solid var(--line);
+  }
+  .cat-count{font-size:12px; color:var(--sub); font-weight:500; font-family:'Noto Sans JP', sans-serif;}
+
+  .item{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    padding:11px 12px;
+    border-radius:10px;
+    background:var(--card);
+    border:1px solid var(--line);
+    margin-bottom:8px;
+    cursor:pointer;
+    transition:border-color .15s ease, background .15s ease;
+    font-size:14.5px;
+    user-select:none;
+  }
+  .item:has(input:checked){
+    border-color:var(--gold);
+    background:color-mix(in srgb, var(--gold) 8%, var(--card));
+  }
+  .item input{
+    appearance:none;
+    -webkit-appearance:none;
+    width:20px;
+    height:20px;
+    flex:0 0 20px;
+    margin:2px 0 0;
+    border-radius:6px;
+    border:2px solid var(--line);
+    background:var(--card);
+    position:relative;
+    cursor:pointer;
+  }
+  .item input:checked{background:var(--gold); border-color:var(--gold);}
+  .item input:checked::after{
+    content:"";
+    position:absolute;
+    left:5px; top:1px;
+    width:6px; height:11px;
+    border:solid var(--navy-deep);
+    border-width:0 2.5px 2.5px 0;
+    transform:rotate(40deg);
+  }
+
+  .result{border-radius:14px; padding:20px; margin:8px 0 28px; border:1px solid var(--line); background:var(--card);}
+  .result-title{font-family:'Shippori Mincho', serif; font-size:19px; font-weight:700; margin:0 0 8px;}
+  .result-body{font-size:14px; color:var(--sub); margin:0 0 14px;}
+  .result[data-level="good"] .result-title{color:var(--good);}
+  .result[data-level="mid"] .result-title{color:var(--warn);}
+  .result[data-level="bad"] .result-title{color:var(--bad);}
+
+  .actions{display:flex; gap:10px; flex-wrap:wrap;}
+  button{
+    font-family:'Noto Sans JP', sans-serif;
+    font-size:13.5px;
+    font-weight:700;
+    padding:10px 16px;
+    border-radius:999px;
+    border:1px solid var(--navy);
+    background:var(--navy);
+    color:#fff;
+    cursor:pointer;
+  }
+  button.ghost{background:transparent; color:var(--ghost-text);}
+  button:active{transform:translateY(1px);}
+
+  .toast{
+    position:fixed;
+    left:50%; bottom:24px;
+    transform:translate(-50%,12px);
+    background:var(--navy-deep);
+    color:#fff;
+    padding:10px 18px;
+    border-radius:999px;
+    font-size:13px;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .2s ease, transform .2s ease;
+  }
+  .toast.show{opacity:1; transform:translate(-50%,0);}
+
+  .recs{margin:0 0 28px;}
+  .recs-title{font-size:12.5px; font-weight:700; color:var(--sub); letter-spacing:.03em; margin-bottom:10px;}
+  .recs-list{display:flex; flex-direction:column; gap:8px;}
+  .rec-card{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:13px 14px;
+    border-radius:12px;
+    border:1px solid var(--line);
+    background:var(--card);
+    text-decoration:none;
+    color:inherit;
+  }
+  .rec-tag{
+    flex:0 0 auto;
+    font-size:11px;
+    font-weight:700;
+    color:#10192e;
+    background:var(--gold-soft);
+    padding:3px 9px;
+    border-radius:999px;
+    white-space:nowrap;
+  }
+  .rec-title{font-size:14px; font-weight:700; color:var(--heading); line-height:1.4;}
+  .rec-arrow{margin-left:auto; color:var(--gold); font-size:18px; flex:0 0 auto;}
+
+  footer{margin-top:8px; font-size:12px; color:var(--sub); text-align:center;}
+  footer p{margin:4px 0;}
+  footer a{color:var(--sub);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">イケオジ計画 診断ツール</div>
+    <h1>清潔感セルフチェック</h1>
+    <p class="lede">当てはまる項目にチェックを入れてください。数が多いほど、見直す余地がある項目ということになります。</p>
+  </header>
+
+  <div class="progress-card">
+    <div class="progress-num" id="score">100<span>点</span></div>
+    <div class="progress-body">
+      <div class="progress-label">イケオジ指数</div>
+      <div class="progress-verdict" id="verdict">まずは下のリストから始めてみましょう</div>
+      <div class="bar-track"><div class="bar-fill" id="bar"></div></div>
+      <div class="progress-sub" id="count-sub">30項目中 0個 当てはまりました</div>
+    </div>
+  </div>
+
+  <div id="categories"></div>
+
+  <div class="result" id="result" data-level="good">
+    <div class="result-title" id="result-title">かなり意識できています</div>
+    <p class="result-body" id="result-body">今の習慣を維持すれば十分です。引き続き、この調子で。</p>
+    <div class="actions">
+      <button id="copy">結果をコピーする</button>
+      <button class="ghost" id="reset">チェックをリセット</button>
+    </div>
+  </div>
+
+  <div class="recs" id="recs" hidden>
+    <div class="recs-title">チェックが多かった項目から、あわせて読みたい記事</div>
+    <div class="recs-list" id="recs-list"></div>
+  </div>
+
+  <footer>
+    <p>イケオジ計画｜気づく、変わる、選ばれる。</p>
+    <p><a href="https://www.ikeojikeikaku.com/">ブログへ戻る</a>　<a href="../">ほかのツール</a>　<a href="https://www.ikeojikeikaku.com/entry/2026/09/24/115841">プライバシーポリシー</a></p>
+    <p>チェックした内容は、このブラウザの中にだけ保存されます（送信はしません）。</p>
+  </footer>
+</div>
+
+<div class="toast" id="toast">結果をコピーしました</div>
+
+<script>
+(function(){
+  var DATA = [
+    {cat:"顔・肌", items:[
+      "肌が乾燥してカサついている",
+      "額・小鼻がテカっている（皮脂）",
+      "ニキビ・吹き出物を放置している",
+      "目やになど、顔に汚れが残っていることがある",
+      "唇が乾燥して皮がむけている"
+    ]},
+    {cat:"髪", items:[
+      "寝グセが直っていないまま出かけることがある",
+      "髪が伸びすぎて耳・襟にかかっている",
+      "分け目やつむじがフケで目立つ",
+      "美容室・床屋に行くのが3ヶ月以上前"
+    ]},
+    {cat:"ヒゲ・鼻毛・眉毛", items:[
+      "ヒゲの剃り残しがある（顎下・首元も）",
+      "鼻毛が見えていることがある",
+      "眉毛が伸びすぎ・繋がりすぎている",
+      "耳から毛が出ている"
+    ]},
+    {cat:"口元・体臭", items:[
+      "口臭を指摘されたことがある、または気になっている",
+      "歯に黄ばみ・歯垢が目立つ",
+      "汗のニオイ対策を何もしていない",
+      "服や体に前日の匂いが残っていることがある"
+    ]},
+    {cat:"服装", items:[
+      "シャツ・Tシャツにシワが寄ったまま着ている",
+      "襟元・袖口が黄ばんでいる、よれている",
+      "服に毛玉ができている",
+      "サイズが合っていない（ダボつき・きつすぎ）",
+      "季節に合わない服装をしていることがある",
+      "靴下に穴や伝線がある"
+    ]},
+    {cat:"爪・手元", items:[
+      "爪が伸びすぎている",
+      "爪の間に汚れが溜まっている",
+      "手荒れ・ささくれを放置している"
+    ]},
+    {cat:"靴・小物", items:[
+      "靴が汚れている、かかとがすり減っている",
+      "鞄や財布がボロボロになっている",
+      "メガネのレンズが汚れている"
+    ]},
+    {cat:"姿勢・所作", items:[
+      "猫背・下を向いた姿勢になりがちだ"
+    ]}
+  ];
+
+  // from：公開日時。これより前は表示しない（予約投稿の記事に先にリンクしないため）
+  var B = "https://www.ikeojikeikaku.com/entry/";
+  var CATEGORY_LINKS = {
+    "顔・肌": [
+      {title:"40代・50代メンズの保湿は「オールインワン1本」でいい", url:B+"mens-all-in-one", from:"2026-09-30T07:00:00+09:00"}
+    ],
+    "髪": [
+      {title:"顔の形スキャン（似合いやすい髪型の目安がわかるツール）", url:"../face/"},
+      {title:"フケ・頭皮のかゆみ対策｜見直したい洗い方と、タイプ別の薬用シャンプー", url:B+"dandruff-scalp-care", from:"2026-10-06T07:00:00+09:00"},
+      {title:"整髪料の選び方｜「ベタつく・崩れる・ぺたんこになる」を防ぐ", url:B+"hair-styling-products", from:"2026-10-05T07:00:00+09:00"},
+      {title:"美容室と床屋、40代・50代はどっちに行くべきか", url:B+"barber-or-salon", from:"2026-10-07T19:00:00+09:00"}
+    ],
+    "ヒゲ・鼻毛・眉毛": [
+      {title:"鼻毛・耳毛カッターの選び方｜エチケットカッター3機種を比較", url:B+"nose-ear-hair-cutter", from:"2026-09-27T07:00:00+09:00"},
+      {title:"ヒゲの剃り残しをなくす｜あご下・首に残らない剃り方", url:B+"shaving-missed-spots", from:"2026-10-01T07:00:00+09:00"},
+      {title:"眉の整え方｜描かない・作り込まない最低限のケア", url:B+"eyebrow-grooming", from:"2026-10-08T07:00:00+09:00"}
+    ],
+    "口元・体臭": [
+      {title:"制汗シートを卒業した話。塗るデオドラントに変えて変わったこと", url:"https://www.ikeojikeikaku.com/entry/2026/09/24/130521"},
+      {title:"40代・50代の口臭ケア｜「舌」と「歯の間」を数百円の道具で整える", url:B+"bad-breath-care", from:"2026-09-29T07:00:00+09:00"},
+      {title:"服に残るにおい対策｜「洗ったのに臭う」を防ぐ洗い方・干し方", url:B+"clothes-odor", from:"2026-10-07T07:00:00+09:00"}
+    ],
+    "服装": [
+      {title:"白・黒・グレーしか着られない男が、たった1色足すだけで変わった話", url:"https://www.ikeojikeikaku.com/entry/2026/09/24/123515"},
+      {title:"「服は単品で選ばない」ディスプレイ買いでコーディネートの失敗がなくなった話", url:"https://www.ikeojikeikaku.com/entry/2026/09/24/124512"},
+      {title:"毛玉取り器の選び方｜服が「くたびれて見える」を防ぐ", url:B+"fabric-shaver", from:"2026-09-28T07:00:00+09:00"}
+    ],
+    "爪・手元": [
+      {title:"40代・50代の爪と手元のケア｜爪の切り方と道具2つ", url:B+"nail-hand-care", from:"2026-10-04T07:00:00+09:00"}
+    ],
+    "靴・小物": [
+      {title:"40代・50代の靴の手入れ｜1日1分のブラッシングと手入れ道具", url:B+"shoe-care", from:"2026-10-02T07:00:00+09:00"},
+      {title:"メガネの正しい手入れ｜水洗いと拭き方の基本", url:B+"glasses-care", from:"2026-10-03T07:00:00+09:00"}
+    ],
+    "姿勢・所作": [
+      {title:"猫背を直すだけで、なぜ印象が変わるのか", url:"https://www.ikeojikeikaku.com/entry/2026/09/24/130003"},
+      {title:"筋トレなしでできる姿勢改善3ステップ", url:B+"posture-3-steps", from:"2026-10-06T19:00:00+09:00"}
+    ]
+  };
+  var now = Date.now();
+  Object.keys(CATEGORY_LINKS).forEach(function(cat){
+    CATEGORY_LINKS[cat] = CATEGORY_LINKS[cat].filter(function(a){ return !a.from || Date.parse(a.from) <= now; });
+    if(CATEGORY_LINKS[cat].length === 0) delete CATEGORY_LINKS[cat];
+  });
+
+  var TOTAL = DATA.reduce(function(n,g){return n+g.items.length;},0);
+  var root = document.getElementById('categories');
+  var storeKey = 'ikeoji-seiketsukan-v1';
+  var saved = {};
+  try{
+    var raw = localStorage.getItem(storeKey);
+    if(raw) saved = JSON.parse(raw) || {};
+  }catch(e){}
+
+  var idx = 0;
+  DATA.forEach(function(group){
+    var section = document.createElement('div');
+    section.className = 'cat';
+    var title = document.createElement('div');
+    title.className = 'cat-title';
+    title.textContent = group.cat + ' ';
+    var count = document.createElement('span');
+    count.className = 'cat-count';
+    count.textContent = group.items.length + '項目';
+    title.appendChild(count);
+    section.appendChild(title);
+
+    group.items.forEach(function(text){
+      var id = 'q' + idx;
+      var row = document.createElement('label');
+      row.className = 'item';
+      var input = document.createElement('input');
+      input.type = 'checkbox';
+      input.id = id;
+      input.setAttribute('data-cat', group.cat);
+      if(saved[id]) input.checked = true;
+      input.addEventListener('change', update);
+      row.appendChild(input);
+      row.appendChild(document.createTextNode(text));
+      section.appendChild(row);
+      idx++;
+    });
+    root.appendChild(section);
+  });
+
+  var scoreEl = document.getElementById('score');
+  var countSubEl = document.getElementById('count-sub');
+  var verdictEl = document.getElementById('verdict');
+  var barEl = document.getElementById('bar');
+  var resultEl = document.getElementById('result');
+  var resultTitle = document.getElementById('result-title');
+  var resultBody = document.getElementById('result-body');
+  var recsEl = document.getElementById('recs');
+  var recsListEl = document.getElementById('recs-list');
+  var catTotals = {};
+  DATA.forEach(function(g){ catTotals[g.cat] = g.items.length; });
+
+  function levelFor(n){
+    if(n <= 5) return {
+      key:'good', title:'完成されたイケオジ',
+      body:'今の習慣を維持すれば十分です。特別なテコ入れよりも、今のペースを保つことを意識してみてください。'
+    };
+    if(n <= 15) return {
+      key:'mid', title:'伸びしろあり、育成中',
+      body:'いくつか見直す余地があります。特に「鼻毛」「靴のかかと」「メガネの汚れ」「爪の間の汚れ」のような、自分では気づきにくい項目から優先的に手をつけるのがおすすめです。'
+    };
+    return {
+      key:'bad', title:'夜明け前',
+      body:'一度に全部を直そうとせず、まずは3つだけ選んで今週中に手をつけてみてください。小さな改善の積み重ねが、印象を大きく変えます。'
+    };
+  }
+
+  function scoreFor(n){
+    return Math.max(0, Math.round((1 - n / TOTAL) * 100));
+  }
+
+  function update(){
+    var checked = root.querySelectorAll('input:checked');
+    var n = checked.length;
+    var score = scoreFor(n);
+    scoreEl.firstChild.nodeValue = score;
+    countSubEl.textContent = TOTAL + '項目中 ' + n + '個 当てはまりました';
+    barEl.style.width = score + '%';
+
+    var lv = levelFor(n);
+    resultEl.setAttribute('data-level', lv.key);
+    resultTitle.textContent = lv.title + '（イケオジ指数 ' + score + '点）';
+    resultBody.textContent = lv.body;
+    verdictEl.textContent = n===0 ? 'まずは下のリストから始めてみましょう' : lv.title + '（' + score + '点）';
+    barEl.style.background = lv.key==='good' ? 'var(--good)' : (lv.key==='mid' ? 'var(--gold)' : 'var(--bad)');
+
+    var state = {};
+    checked.forEach(function(c){ state[c.id] = true; });
+    try{ localStorage.setItem(storeKey, JSON.stringify(state)); }catch(e){}
+
+    renderRecs(checked);
+  }
+
+  function renderRecs(checked){
+    var catChecked = {};
+    checked.forEach(function(c){
+      var cat = c.getAttribute('data-cat');
+      catChecked[cat] = (catChecked[cat] || 0) + 1;
+    });
+
+    var candidates = Object.keys(CATEGORY_LINKS).map(function(cat){
+      var count = catChecked[cat] || 0;
+      return { cat:cat, count:count, ratio: count / catTotals[cat] };
+    }).filter(function(c){ return c.count > 0; })
+      .sort(function(a,b){ return b.ratio - a.ratio; });
+
+    recsListEl.innerHTML = '';
+    if(candidates.length === 0){
+      recsEl.hidden = true;
+      return;
+    }
+    recsEl.hidden = false;
+    candidates.slice(0,3).forEach(function(c){
+      CATEGORY_LINKS[c.cat].forEach(function(article){
+        var a = document.createElement('a');
+        a.className = 'rec-card';
+        a.href = article.url;
+        if(/^https?:/.test(article.url)){ a.target = '_blank'; a.rel = 'noopener'; }
+        var tag = document.createElement('span'); tag.className = 'rec-tag'; tag.textContent = c.cat;
+        var t = document.createElement('span'); t.className = 'rec-title'; t.textContent = article.title;
+        var arrow = document.createElement('span'); arrow.className = 'rec-arrow'; arrow.textContent = '›';
+        a.append(tag, t, arrow);
+        recsListEl.appendChild(a);
+      });
+    });
+  }
+
+  document.getElementById('reset').addEventListener('click', function(){
+    root.querySelectorAll('input').forEach(function(c){ c.checked = false; });
+    try{ localStorage.removeItem(storeKey); }catch(e){}
+    update();
+  });
+
+  var toast = document.getElementById('toast');
+  document.getElementById('copy').addEventListener('click', function(){
+    var n = root.querySelectorAll('input:checked').length;
+    var lv = levelFor(n);
+    var score = scoreFor(n);
+    var text = 'イケオジ指数 ' + score + '点（' + lv.title + '）\n清潔感セルフチェック 30項目中 ' + n + '個該当\nイケオジ計画｜気づく、変わる、選ばれる。\nhttps://tools.ikeojikeikaku.com/check/';
+    function showToast(){
+      toast.classList.add('show');
+      setTimeout(function(){ toast.classList.remove('show'); }, 1800);
+    }
+    function fallback(){
+      try{
+        var ta=document.createElement('textarea');
+        ta.value=text; document.body.appendChild(ta); ta.select();
+        document.execCommand('copy'); document.body.removeChild(ta);
+        showToast();
+      }catch(e){}
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(showToast).catch(fallback);
+    } else {
+      fallback();
+    }
+  });
+
+  update();
+})();
+</script>
+</body>
+</html>
